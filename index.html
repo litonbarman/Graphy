@@ -1,0 +1,578 @@
+<html>
+
+  <head>
+    <title>Graphy</title>
+    <script src="chart.js"></script>
+    <style>
+       body{
+         background: rgb(255, 255, 255);
+       }
+
+       header{
+         background-color:#fff;
+         position:fixed;
+         top:0px;
+         left:0px;
+         width:100%;
+         height:50px;
+         opacity:1;
+       }
+
+       header #name{
+         font-size: 40px;
+         font-style: normal;
+         font-weight: bold;
+         margin: 0px auto;
+         position:absolute;
+         left:40px;
+         cursor:none;
+       }
+
+       header #nac{
+         height:40px;
+         width:140px;
+         position:absolute;
+         right:40px;
+         margin:5px auto;
+       }
+       header .button{
+         height:30px;
+         width:50%;
+         position:absolute;
+         top:0px;
+         text-align:center;
+         padding-top:10px;
+         border-radius: 5px;
+         cursor:pointer;
+       }
+       header #log{
+         left:0px;
+       }
+       header #log:hover{
+         background: pink;
+       }
+       header #sig:hover{
+         background: rgb(22, 154, 138);
+         color:#fff;
+       }
+       header #sig{
+         left:50%;
+         background: rgb(122, 254, 238);
+       }
+
+       aside{
+         height:480px;
+         width:100%;
+         position:fixed;
+         top:51px;
+         left:0px;
+         background-image: url('l.png');
+         background-repeat:repeat-x;
+         background-position:left;
+         background-size: cover;
+       }
+
+       #nav{
+         background-image: url('u.png');
+         background-repeat:no-repeat;
+         background-position: 0 0;
+         background-size: 100% 100%;
+
+         min-height:500px;
+         width:60%;
+         position:absolute;
+         top:100px;
+         background:;
+         box-shadow: -60px -60px 80px 2px rgb(39, 124, 105);
+         border-radius: 20px;
+         padding:10px;
+         visibility:visible;
+
+         animation-name: moveScale;
+         animation-duration:0.8s;
+         animation-timing-function:ease-out;
+         animation-iteration-count: 1;
+       }
+
+
+       #nav:hover{
+         animation-name: rotateShadow;
+         animation-duration:6s;
+         animation-timing-function: linear;
+         animation-iteration-count: infinite;
+       }
+
+       @keyframes rotateShadow{
+         0% {box-shadow: -60px -60px 80px 2px rgb(39, 124, 105);}
+         26% {box-shadow: 60px -60px 80px 2px rgb(39, 124, 105);}
+         48% {box-shadow: 60px 60px 80px 2px rgb(39, 124, 105);}
+         65% {box-shadow: -60px 60px 80px 2px rgb(39, 124, 105);}
+         100% {box-shadow: -60px -60px 80px 2px rgb(39, 124, 105);}
+       }
+
+       @keyframes moveScale{
+         0% {transform:scale(0.6);}
+         30% {transform:scale(0.9);}
+         60% {transform:scale(0.7);}
+         100% {transform:scale(1);}
+       }
+
+       #nav #head{
+         color:#000;
+         font-size: 50px;
+         position:absolute;
+         left:-30px;
+         top:20px;
+         margin:30px;
+         text-align: center;
+         width:100%;
+         height:100%;
+       }
+       #nav #head span{
+         color:#000;
+         font-size: 20px;
+         margin:30px;
+         text-align: center;
+         min-width:100%;
+       }
+       #nav #button{
+         color:#000;
+         background:rgb(122, 254, 238);
+         position:absolute;
+         height:10%;
+         width:200px;
+         text-align: center;
+         padding-top:20px;
+         font-size: 25px;
+         bottom:6%;
+        border-radius:10px;
+        cursor:pointer;
+       }
+       #nav #button:hover{
+         color:#fff;
+         background:rgb(22, 154, 138);
+         cursor:pointer;
+       }
+
+       #holder{
+         position:fixed;
+         top:51px;
+         left:0px;
+         width:100%;
+         height:10%;
+         overflow: hidden;
+         visibility:hidden;
+       }
+
+       #canvas{
+         position:absolute;
+         height:70%;
+         top:0px;
+         left:0px;
+         width:100%;
+         background:rgba(255, 255, 255, 0.9);
+         overflow:auto;
+       }
+       #function{
+         position:absolute;
+         top:70%;
+         left:0px;
+         width:100%;
+         height:30%;
+       }
+
+       #function #options{
+          height:60px;
+          width:100%;
+          background: rgba(255, 255, 255, 0.8);
+          position:absolute;
+          top:0px;
+          left:0px;
+       }
+       #function #options #fun_button{
+         height:80%;
+         width:100px;
+         background: rgba(122, 254, 238, 1);
+         border:none;
+         position:absolute;
+         top:10%;
+         left:5%;
+         color:#000;
+         text-align: center;
+         font-size:20px;
+         border-radius: 6px;
+       }
+       #function #options #fun_button:hover{
+         background: rgb(22, 154, 138);
+         color:#fff;
+       }
+
+       #function #options #add{
+         background:rgba(122, 254, 238, 1);
+         border:none;
+         height:80%;
+         width:50px;
+         position:absolute;
+         top:10%;
+         left:160px;
+         border-radius: 6px;
+         text-align:center;
+       }
+
+       #function #options #add:hover{
+         background: rgb(22, 154, 138);
+         color:#fff;
+       }
+
+       #function #options #gra_button{
+         height:80%;
+         width:100px;
+         background: rgba(122, 254, 238, 1);
+         border:none;
+         position:absolute;
+         top:10%;
+         right:5%;
+         color:#000;
+         text-align:center;
+         font-size:14px;
+         border-radius: 6px;
+       }
+       #function #options #gra_button:hover{
+         background: rgb(22, 154, 138);
+         color:#fff;
+       }
+
+       #user_function{
+         height:200px;
+         width:100%;
+         position:absolute;
+         top:61px;
+         overflow-x: hidden;
+         overflow-y: scroll;
+       }
+
+
+       .user_tFunction{
+         height:100px;
+         width:100%;
+         background: rgba(255, 255, 255, 0.9);
+         border:1px solid black;
+         margin-top:5px;
+         position:relative;
+       }
+
+       .user_tFunction_holder{
+         height:40px;
+         width:90%;
+         position:absolute;
+         top:30px;
+         left:6%;
+         color:#000;
+         padding-top:0px;
+         padding-left:10px;
+         font-size:30px;
+         border:none;
+       }
+       .user_tFunction_holder:focus{
+         outline:none;
+       }
+       .slNo{
+          height:66px;
+          width:6%;
+          background:rgb(86, 211, 248);
+          color:#fff;
+          font-size:30px;
+          text-align:center;
+          padding-top:34px;
+          position:absolute;
+          left:0px;
+          top:0px;
+       }
+       .cross{
+         height:16px;
+         width:16px;
+         padding:0px;
+         font-size: 12px;
+         position:absolute;
+         top:0px;
+         right:2px;
+         cursor:pointer;
+       }
+
+    </style>
+  </head>
+  <body onload="makeitCenter()" onresize="makeitCenter()">
+
+  <header>
+    <div id="name">Graphy</div>
+    <div id="nac">
+      <div class="button" id="log">Log In</div>
+      <div class="button" id="sig">Sign Up</div>
+    </div>
+  </header>
+
+  <aside>
+
+  </aside>
+
+
+  <div id="nav">
+        <div id="head">
+          Graphy The Graph Calculator <br/><br/><span> Graphy is  not a ordinary calculator. It is capabale of plotting Graph of every function / data you give it.
+          It can proof handy, to learn, observe, create math function visually.</span>
+        </div>
+        <div id="button" onclick="clickit()">Open Graphy</div>
+  </div>
+
+  <div id="holder">
+    <div id="surface">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div id="function">
+
+       <div id="options">
+             <select type="dropdown" id="fun_button" name="fun_button">
+                <option value="fun">fun()</option>
+                <option value="sin">sin()</option>
+                <option value="cos">cos()</option>
+                <option value="tan">tan()</option>
+                <option value="cot">cot()</option>
+                <option value="sec">sec()</option>
+                <option value="cosec">cosec()</option>
+             </select>
+
+             <button id="add" onclick="addFunc()">Add</button>
+
+             <select type="dropdown" id="gra_button" name="gra_button">
+                <option value="fun">Bar-Graph</option>
+                <option value="sin">Line-Graph</option>
+                <option value="cos">Pie-Graph</option>
+                <option value="tan">Radar-Graph</option>
+                <option value="cot">PolarArea-Graph</option>
+                <option value="cot">HorizantalBar-Graph</option>
+                <option value="cot">GroupedBar-Graph</option>
+             </select>
+
+       </div>
+
+       <div id="user_function">
+
+
+
+         <div class="user_tFunction">
+           <div class="slNo">1</div>
+           <div class="cross" id="pre"></div>
+
+           <div class="user_tFunction_holder" contenteditable="true">X + X^2</div>
+         </div>
+
+
+
+
+       </div>
+
+    </div>
+  <div>
+
+
+
+  </body>
+  <script>
+/*
+<div class="user_tFunction">
+  <div class="slNo">1</div>
+  <div class="cross" id="pre"></div>
+
+  <div class="user_tFunction_holder" contenteditable="true">X + X^2</div>
+</div>
+*/
+
+
+     // &#10060
+     //  background: rgb(169, 254, 235);
+
+     document.getElementById('nav').style.visibility = "hidden";
+     document.getElementById('holder').style.visibility = "visible";
+
+     var mobile = true;
+
+     function makeitCenter(){
+         document.getElementById('nav').style.left = 20+"%";
+         document.getElementById('nav').style.top = 30+"%";
+         document.getElementById('button').style.left = (document.getElementById('nav').clientWidth/2  - 100);
+
+         setSize();
+
+     }
+
+     function clickit(){
+       document.getElementById('nav').style.visibility = "hidden";
+       document.getElementById('holder').style.visibility = "visible";
+     }
+
+
+    function setSize(){
+	  if(!mobile){
+	    return;
+	  }
+
+      document.getElementById('holder').style.height = (100-((51/window.innerHeight)*100)) + "%";
+
+      document.getElementById('function').style.height = document.getElementById('holder').clientHeight - document.getElementById('canvas').clientHeight;
+      document.getElementById('function').style.top = document.getElementById('canvas').clientHeight;
+
+      document.getElementById('user_function').style.height = (document.getElementById('function').clientHeight - 61) + "px";
+    }
+//------------------------------------------------------------------------------------
+
+var track_function_no = 0;
+
+document.getElementById('pre').innerHTML = "&#10060";
+document.getElementById('pre').addEventListener("click", function(){ removeUser_tFunction(this) });
+
+function removeUser_tFunction(sf){
+
+  --track_function_no;
+
+  // reasign function number
+
+  var childNo = document.getElementById("user_function").childElementCount;
+  var childArray = sf.parentNode.previousSibling;
+  var no = sf.parentNode.childNodes[1].textContent;
+  //--no;
+
+  if(no == 1){
+     childArray = sf.parentNode.nextSibling;
+  }
+  else{
+     --no;
+  }
+
+
+  sf.parentNode.remove();
+
+
+  while(childArray){
+     childArray.childNodes[1].innerHTML = no++;
+     childArray = childArray.nextSibling;
+  }
+
+}
+
+
+function addFunc(){
+
+  var contain = document.getElementById('user_function');
+
+  var child1 = document.createElement("div");
+  child1.className = "user_tFunction";
+  var cross = document.createElement("div");
+  cross.innerHTML = "&#10060";
+  cross.className = "cross";
+  cross.addEventListener("click", function(){ removeUser_tFunction(this) });
+  child1.appendChild( cross );
+
+
+  var child2 = document.createElement("div");
+  child2.className = "slNo";
+  child2.innerHTML = ++track_function_no;
+  child1.appendChild(child2);
+
+
+  var child3 = document.createElement("div");
+  child3.className = "user_tFunction_holder";
+  child3.contentEditable = "true";
+  child1.appendChild(child3);
+
+
+
+  contain.appendChild(child1);
+
+
+
+  var fun = document.getElementById('fun_button').value;
+
+
+  if(fun == "fun"){
+    child3.innerHTML = "";
+  }
+  else if(fun == "sin"){
+    child3.innerHTML = "sin(x)";
+  }
+  else if(fun == "cos"){
+    child3.innerHTML = "cos(x)";
+  }
+  else if(fun == "tan"){
+    child3.innerHTML = "tan(x)";
+  }
+  else if(fun == "cot"){
+    child3.innerHTML = "cot(x)";
+  }
+  else if(fun == "cosec"){
+    child3.innerHTML = "cosec(x)";
+  }
+  else if(fun == "sec"){
+    child3.innerHTML = "sec(x)";
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// -----------------------------------------------------------------------------------
+var ctx = document.getElementById('canvas').getContext('2d');
+
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 5],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive : false,
+        height : (document.getElementById('canvas').clientHeight + 50),
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+
+    }
+});
+
+//myChart.canvas.parentNode.style.height = '100px';
+  </script>
+</html>
